@@ -93,10 +93,6 @@ public abstract class TearDownTestCase extends TestCase
 
   TearDownStack stack = new TearDownStack();
 
-  @Override protected void setUp() throws Exception {
-    super.setUp();
-  }
-
   /**
    * Registers a TearDown implementor which will be run during
    * {@link #tearDown} unless the system property to skip tearDown was set.
