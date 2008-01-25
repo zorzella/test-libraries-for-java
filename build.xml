@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="test-libraries-for-java" default="compile">
+<project name="tl4j" default="compile">
 
   <property environment="env"/>
   <property file="build.properties"/>
@@ -61,26 +61,26 @@
 
   <target name="jar" depends="compile" description="Build jar.">
     <mkdir dir="${build.dir}/dist"/>
-    <mkdir dir="${build.dir}/dist/test-libraries-for-java-${version}"/>
-    <jar jarfile="${build.dir}/dist/test-libraries-for-java-${version}/test-libraries-for-java-${version}.jar">
+    <mkdir dir="${build.dir}/dist/tl4j-${version}"/>
+    <jar jarfile="${build.dir}/dist/tl4j-${version}/tl4j-${version}.jar">
       <fileset dir="${build.dir}/classes"/>
     </jar>
   </target>
 
   <target name="jarsrc" description="Build jar of source.">
-    <jar jarfile="${build.dir}/dist/test-libraries-for-java-${version}/src-${version}.zip">
+    <jar jarfile="${build.dir}/dist/tl4j-${version}/src-${version}.zip">
       <fileset dir="${src.dir}"/>
     </jar>
   </target>
 
   <target name="dist" depends="jar, jarsrc, javadoc"
        description="Build entire distribution.">
-    <copy toDir="${build.dir}/dist/test-libraries-for-java-${version}" file="COPYING"/>
-    <copy toDir="${build.dir}/dist/test-libraries-for-java-${version}">
+    <copy toDir="${build.dir}/dist/tl4j-${version}" file="COPYING"/>
+    <copy toDir="${build.dir}/dist/tl4j-${version}">
       <fileset dir="${build.dir}" includes="javadoc/**/*"/>
     </copy>
 
-    <zip destfile="${build.dir}/test-libraries-for-java-${version}.zip"
+    <zip destfile="${build.dir}/tl4j-${version}.zip"
       basedir="${build.dir}/dist"/>
   </target>
 
@@ -92,16 +92,10 @@
          destdir="${build.dir}/javadoc"
          author="true"
          protected="true"
-         windowtitle="Google Collections Library - ${version} (ALPHA)">
+         windowtitle="Testing Libraries For Java (TL4J)">
       <sourcepath>
-        <!--
-          For some unknown reason, {@inheritDoc} only appears to work when using
-          javadoc from 1.5.0_01, and pulling the source from 1.5.0_06.
-        -->
-        <pathelement location="${env.JAVA_HOME}/src/"/>
         <pathelement location="${src.dir}"/>
       </sourcepath>
-      <link href="http://java.sun.com/javase/6/docs/api"/>
     </javadoc>
   </target>
 </project>
