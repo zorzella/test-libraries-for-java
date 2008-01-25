@@ -14,10 +14,14 @@
     <javac srcdir="${src.dir}"
          debug="on"
          destdir="${build.dir}/classes">
+      <classpath>
+        <pathelement location="${build.dir}/classes"/>
+        <pathelement location="${lib.dir}/junit3.8.1.jar"/>
+      </classpath>
     </javac>
-    <copy toDir="${build.dir}/classes">
+    <!-- copy toDir="${build.dir}/classes">
       <fileset dir="${src.dir}" excludes="**/*.java"/>
-    </copy>
+    </copy -->
   </target>
 
   <target name="test.compile"
@@ -29,12 +33,9 @@
          destdir="${build.dir}/test">
       <classpath>
         <pathelement location="${build.dir}/classes"/>
-        <pathelement location="${lib.dir}/build/junit.jar"/>
+        <pathelement location="${lib.dir}/junit3.8.1.jar"/>
       </classpath>
     </javac>
-    <copy toDir="${build.dir}/test">
-      <fileset dir="${test.dir}" excludes="**/*.java"/>
-    </copy>
   </target>
 
   <target name="test"
