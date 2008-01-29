@@ -91,6 +91,11 @@ import junit.framework.TestCase;
 public abstract class TearDownTestCase extends TestCase
     implements TearDownAccepter {
 
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+  }
+  
   TearDownStack stack = new TearDownStack();
 
   /**

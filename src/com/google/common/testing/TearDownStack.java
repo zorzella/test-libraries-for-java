@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class TearDownStack implements TearDownAccepter {
 
-  static final Logger logger
+  public static final Logger logger
       = Logger.getLogger(TearDownStack.class.getName());
 
   private static final boolean SKIP_OPTIONAL_TASKS
