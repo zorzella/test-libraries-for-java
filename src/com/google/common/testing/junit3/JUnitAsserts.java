@@ -32,6 +32,25 @@ public final class JUnitAsserts {
   private JUnitAsserts() { }
 
   /**
+   * Asserts that {@code actual} is not equal {@code unexpected}, according
+   * to both {@code ==} and {@link Object#equals}.
+   */
+  public static void assertNotEqual(
+      String message, Object unexpected, Object actual) {
+    if (equal(unexpected, actual)) {
+      failEqual(message, unexpected);
+    }
+  }
+
+  /**
+   * Variant of {@link #assertNotEqual(String,Object,Object)} using a
+   * generic message.
+   */
+  public static void assertNotEqual(Object unexpected, Object actual) {
+    assertNotEqual(null, unexpected, actual);
+  }
+
+  /**
    * Asserts that {@code actual} contains precisely the elements
    * {@code expected}, and in the same order.
    */
@@ -56,5 +75,19 @@ public final class JUnitAsserts {
   public static void assertContentsInOrder(
       Iterable<?> actual, Object... expected) {
     assertContentsInOrder((String) null, actual, expected);
+  }
+
+  private static void failEqual(String message, Object unexpected) {
+    failWithMessage(message, "expected not to be:<" + unexpected + ">");
+  }
+
+  private static void failWithMessage(String userMessage, String ourMessage) {
+    Assert.fail((userMessage == null)
+        ? ourMessage
+        : userMessage + ' ' + ourMessage);
+  }
+
+  private static boolean equal(Object a, Object b) {
+    return a == b || (a != null && a.equals(b));
   }
 }
