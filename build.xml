@@ -48,7 +48,7 @@
       <classpath>
         <pathelement location="${build.dir}/test"/>
         <pathelement location="${build.dir}/classes"/>
-        <pathelement location="${lib.dir}/build/junit.jar"/>
+        <pathelement location="${lib.dir}/junit3.8.1.jar"/>
       </classpath>
       <arg value="${test.class}"/>
     </java>
