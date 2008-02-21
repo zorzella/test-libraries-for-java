@@ -13,6 +13,7 @@
     <mkdir dir="${build.dir}/classes"/>
     <javac srcdir="${src.dir}"
          debug="on"
+         target="1.5"
          destdir="${build.dir}/classes">
       <classpath>
         <pathelement location="${build.dir}/classes"/>
@@ -30,6 +31,7 @@
     <mkdir dir="${build.dir}/test"/>
     <javac srcdir="${test.dir}"
          debug="on"
+         target="${target}"
          destdir="${build.dir}/test">
       <classpath>
         <pathelement location="${build.dir}/classes"/>
