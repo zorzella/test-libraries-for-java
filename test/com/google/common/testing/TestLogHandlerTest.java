@@ -41,7 +41,7 @@ public class TestLogHandlerTest extends TearDownTestCase {
 
     ExampleClassUnderTest.logger.setUseParentHandlers(false); // optional
 
-    addRequiredTearDown(new TearDown() {
+    addTearDown(new TearDown() {
       public void tearDown() throws Exception {
         ExampleClassUnderTest.logger.setUseParentHandlers(true);
         ExampleClassUnderTest.logger.removeHandler(handler);

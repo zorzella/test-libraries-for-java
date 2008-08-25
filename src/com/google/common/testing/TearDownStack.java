@@ -30,44 +30,17 @@ public class TearDownStack implements TearDownAccepter {
   public static final Logger logger
       = Logger.getLogger(TearDownStack.class.getName());
 
-  private static final boolean SKIP_OPTIONAL_TASKS
-      = Boolean.getBoolean(TearDownStack.class.getName() + ".SkipTearDown");
-
-  private LinkedList<Task> stack = new LinkedList<Task>(); 
+  private LinkedList<TearDown> stack = new LinkedList<TearDown>(); 
 
   public final void addTearDown(TearDown tearDown) {
-    stack.addFirst(new OptionalTask(tearDown));
-  }
-
-  public final void addRequiredTearDown(TearDown tearDown) {
-    stack.addFirst(new RequiredTask(tearDown));
+    stack.addFirst(tearDown);
   }
 
   /**
-   * Causes tear-down to execute.
+   * Causes teardown to execute.
    */
   public final void runTearDown() {
-    runTearDown(TearDownStack.SKIP_OPTIONAL_TASKS);
-  }
-
-  /**
-   * Causes tear-down to execute.
-   *
-   * @param skip if true, optional tasks will be skipped over
-   */
-  public final void runTearDown(boolean skip) {
-    for (Task task : stack) {
-      task.possiblyExecute(skip);
-    }
-    stack.clear();
-  }
-
-  private abstract static class Task {
-    final TearDown tearDown;
-    Task(TearDown tearDown) {
-      this.tearDown = tearDown;
-    }
-    void execute() {
+    for (TearDown tearDown : stack) {
       try {
         tearDown.tearDown();
       } catch (Throwable t) {
@@ -75,28 +48,7 @@ public class TearDownStack implements TearDownAccepter {
             "exception thrown during tearDown: " + t.getMessage(), t);
       }
     }
-    abstract void possiblyExecute(boolean skipOptionalTasks);
+    stack.clear();
   }
 
-  private static class RequiredTask extends Task {
-    RequiredTask(TearDown tearDown) {
-      super(tearDown);
-    }
-    @Override void possiblyExecute(boolean skipOptionalTasks) {
-      execute();
-    }
-  }
-
-  private static class OptionalTask extends Task {
-    OptionalTask(TearDown tearDown) {
-      super(tearDown);
-    }
-    @Override void possiblyExecute(boolean skipOptionalTasks) {
-      if (skipOptionalTasks) {
-        TearDownStack.logger.log(Level.INFO, "skipping optional TearDown");
-      } else {
-        execute();
-      }
-    }
-  }
 }

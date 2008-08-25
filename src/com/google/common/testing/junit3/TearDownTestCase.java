@@ -74,17 +74,7 @@ import junit.framework.TestCase;
  * your caller to pass in an active instance of TearDownTestCase, to which you
  * can add your TearDown objects.
  * 
- * <p>If the system property
- * {@code com.google.common.testing.TearDownStack.SkipTearDown} is set to
- * {@code true}, only the TearDown objects that were registered using
- * {@link #addRequiredTearDown} will be executed.  This can be useful for
- * debugging.
- * 
  * <p>Please see usage examples in {@link TearDownTestCaseTest}.
- *
- * <p>TODO: consider adding static methods for adding and running <i>global</i>
- * TearDown tasks. Consider using a shutdown hook to ensure that cleanup
- * happens even when the VM aborts.
  *
  * @author Kevin Bourrillion
  */
@@ -99,15 +89,10 @@ public abstract class TearDownTestCase extends TestCase
   TearDownStack stack = new TearDownStack();
 
   /**
-   * Registers a TearDown implementor which will be run during
-   * {@link #tearDown} unless the system property to skip tearDown was set.
+   * Registers a TearDown implementor which will be run during {@link #tearDown()}
    */
   public final void addTearDown(TearDown tearDown) {
     stack.addTearDown(tearDown);
-  }
-
-  public final void addRequiredTearDown(TearDown tearDown) {
-    stack.addRequiredTearDown(tearDown);
   }
 
   @Override protected final void tearDown() {

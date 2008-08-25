@@ -57,7 +57,7 @@ public class TearDownTestCaseTest extends TestCase {
       }
     });
 
-    test.stack.runTearDown(false);
+    test.stack.runTearDown();
     assertNothingWasLogged();
 
     assertContentsInOrder(messages, "a");
@@ -67,7 +67,7 @@ public class TearDownTestCaseTest extends TestCase {
     SomeObject obj = new SomeObject("b");
     test.addTearDown(new SomeObjectTearDown(obj));
 
-    test.stack.runTearDown(false);
+    test.stack.runTearDown();
     assertNothingWasLogged();
 
     assertContentsInOrder(messages, "b");
@@ -77,7 +77,7 @@ public class TearDownTestCaseTest extends TestCase {
     TidyObject obj = new TidyObject("c");
     test.addTearDown(obj);
 
-    test.stack.runTearDown(false);
+    test.stack.runTearDown();
     assertNothingWasLogged();
 
     assertContentsInOrder(messages, "c");
@@ -88,7 +88,7 @@ public class TearDownTestCaseTest extends TestCase {
     test.addTearDown(new TidyObject("y"));
     test.addTearDown(new TidyObject("z"));
 
-    test.stack.runTearDown(false);
+    test.stack.runTearDown();
     assertNothingWasLogged();
 
     assertContentsInOrder(messages, "z", "y", "x");
@@ -100,27 +100,16 @@ public class TearDownTestCaseTest extends TestCase {
     test.addTearDown(new TidyObject("after"));
 
     assertNothingWasLogged();
-    test.stack.runTearDown(false);
+    test.stack.runTearDown();
     assertFailureWasLogged();
 
     assertContentsInOrder(messages, "after", "whoops", "before");
   }
 
-  public void testSkipOptionalTearDowns() throws Exception {
-    test.addTearDown(new TidyObject("sometimes"));
-    test.addRequiredTearDown(new TidyObject("always"));
-
-    assertNothingWasLogged();
-    test.stack.runTearDown(true);
-    assertSkipWasLogged();
-
-    assertContentsInOrder(messages, "always");
-  }
-
   public void testDontSkipOptionalTearDowns() throws Exception {
     test.addTearDown(new TidyObject("sometimes"));
-    test.addRequiredTearDown(new TidyObject("always"));
-    test.stack.runTearDown(false);
+    test.addTearDown(new TidyObject("always"));
+    test.stack.runTearDown();
     assertNothingWasLogged();
     assertContentsInOrder(messages, "always", "sometimes");
   }
@@ -140,13 +129,6 @@ public class TearDownTestCaseTest extends TestCase {
         + "Don't worry, this exception is expected.", record.getMessage());
     assertEquals(Level.INFO, record.getLevel());
     assertNotNull(record.getThrown());
-  }
-
-  private void assertSkipWasLogged() {
-    LogRecord record = handler.getStoredLogRecords().get(0);
-    assertEquals("skipping optional TearDown", record.getMessage());
-    assertEquals(Level.INFO, record.getLevel());
-    assertNull(record.getThrown());
   }
 
   /** This is deeply ironic. */

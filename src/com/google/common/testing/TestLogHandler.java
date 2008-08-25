@@ -48,9 +48,6 @@ import java.util.logging.LogRecord;
  *
  * You can see more usage examples in {@link TestLogHandlerTest}.
  *
- * Note a superset of this functionality is available in
- * {@link AssertingHandler}
- *
  * @author kevinb
  */
 public class TestLogHandler extends Handler {

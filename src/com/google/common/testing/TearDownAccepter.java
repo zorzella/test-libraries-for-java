@@ -29,12 +29,4 @@ public interface TearDownAccepter {
    * tearDown was set.
    */
   void addTearDown(TearDown tearDown);
-
-  /**
-   * Registers a TearDown implementor which will always be run during
-   * {@link TearDownStack#runTearDown()} regardless of the SkipTearDown
-   * preference. Make sure to use this for operations that should be performed
-   * regardless of the user preference, for example, closing file handles.
-   */
-  void addRequiredTearDown(TearDown tearDown);
 }
