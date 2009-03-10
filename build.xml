@@ -5,6 +5,15 @@
   <property environment="env"/>
   <property file="build.properties"/>
 
+  <path id="project.class.path">
+    <pathelement location="${build.dir}/classes"/>
+    <pathelement location="${lib.dir}/junit3.8.1.jar"/>
+  </path>
+
+  <path id="project.test.class.path">
+    <path refid="project.class.path"/>
+  </path>
+
   <!-- can be overridden at the command line with -Dversion=
        or in IDEA, in the ant properties dialog -->
   <target name="compile" description="Compile Java source.">
@@ -12,11 +21,8 @@
     <javac srcdir="${src.dir}"
          debug="on"
          target="${target}"
-         destdir="${build.dir}/classes">
-      <classpath>
-        <pathelement location="${build.dir}/classes"/>
-        <pathelement location="${lib.dir}/junit3.8.1.jar"/>
-      </classpath>
+         destdir="${build.dir}/classes"
+         classpathref="project.class.path">
     </javac>
     <!-- copy toDir="${build.dir}/classes">
       <fileset dir="${src.dir}" excludes="**/*.java"/>
@@ -30,28 +36,33 @@
     <javac srcdir="${test.dir}"
          debug="on"
          target="${target}"
-         destdir="${build.dir}/test">
-      <classpath>
-        <pathelement location="${build.dir}/classes"/>
-        <pathelement location="${lib.dir}/junit3.8.1.jar"/>
-      </classpath>
+         destdir="${build.dir}/test"
+         classpathref="project.test.class.path">
     </javac>
   </target>
 
   <target name="test"
       depends="test.compile"
       description="Execute JUnit tests.">
-    <java fork="true"
-        classname="junit.textui.TestRunner"
-        failonerror="true"
-        taskname="junit">
+    <mkdir dir="${build.dir}/junitreport"/>
+
+  	<junit 
+  		printsummary="yes" 
+  		haltonfailure="yes">
+      <classpath
+      	refid="project.test.class.path"/>
       <classpath>
         <pathelement location="${build.dir}/test"/>
-        <pathelement location="${build.dir}/classes"/>
-        <pathelement location="${lib.dir}/junit3.8.1.jar"/>
       </classpath>
-      <arg value="${test.class}"/>
-    </java>
+      <formatter type="plain"/>
+
+      <batchtest fork="no" todir="${build.dir}/junitreport">
+        <fileset dir="${test.dir}">
+          <include name="**/*Test*.java"/>
+          <exclude name="**/AllTests.java"/>
+        </fileset>
+      </batchtest>
+    </junit>
   </target>
 
   <target name="clean"
@@ -73,7 +84,7 @@
     </jar>
   </target>
 
-  <target name="dist" depends="jar, jarsrc, javadoc"
+  <target name="dist" depends="test, jar, jarsrc, javadoc"
        description="Build entire distribution.">
     <copy toDir="${build.dir}/dist/tl4j-${version}" file="COPYING"/>
     <copy toDir="${build.dir}/dist/tl4j-${version}">
@@ -92,7 +103,9 @@
          destdir="${build.dir}/javadoc"
          author="true"
          protected="true"
-         windowtitle="Testing Libraries For Java (TL4J)">
+         windowtitle="Testing Libraries For Java (TL4J)"
+         classpathref="project.test.class.path"
+      >
       <sourcepath>
         <pathelement location="${src.dir}"/>
       </sourcepath>
