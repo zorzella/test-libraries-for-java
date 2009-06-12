@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.common.testing.junit3;
+package com.google.common.testing;
 
-import static com.google.common.testing.junit3.JUnitAsserts.assertContainsRegex;
-import static com.google.common.testing.junit3.JUnitAsserts.assertContentsInOrder;
-import static com.google.common.testing.junit3.JUnitAsserts.assertMatchesRegex;
-import static com.google.common.testing.junit3.JUnitAsserts.assertNotContainsRegex;
-import static com.google.common.testing.junit3.JUnitAsserts.assertNotEqual;
-import static com.google.common.testing.junit3.JUnitAsserts.assertNotMatchesRegex;
+import static com.google.common.testing.JUnitAsserts.assertContainsRegex;
+import static com.google.common.testing.JUnitAsserts.assertContentsInOrder;
+import static com.google.common.testing.JUnitAsserts.assertMatchesRegex;
+import static com.google.common.testing.JUnitAsserts.assertNotContainsRegex;
+import static com.google.common.testing.JUnitAsserts.assertNotEqual;
+import static com.google.common.testing.JUnitAsserts.assertNotMatchesRegex;
+
+import com.google.common.testing.JUnitAsserts;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;

@@ -16,7 +16,6 @@
 
 package com.google.common.testing;
 
-import com.google.common.testing.junit3.JUnitAssertsTest;
 import com.google.common.testing.junit3.TearDownTestCaseTest;
 
 import junit.framework.Test;
