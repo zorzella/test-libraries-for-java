@@ -24,9 +24,12 @@ package com.google.common.testing;
 public interface TearDownAccepter {
 
   /**
-   * Registers a TearDown implementor which will be run during
-   * {@link TearDownStack#runTearDown()} unless the system property to skip
-   * tearDown was set.
+   * Registers a TearDown implementor which will be run after the test proper.
+   * 
+   * <p>In JUnit4 language, that means as an {@code @After}.
+   * 
+   * <p>In JUnit3 language, that means during the 
+   * {@link junit.framework.TestCase#tearDown()} step.
    */
   void addTearDown(TearDown tearDown);
 }

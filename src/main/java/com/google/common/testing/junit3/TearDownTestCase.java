@@ -86,7 +86,7 @@ public abstract class TearDownTestCase extends TestCase
     super.setUp();
   }
   
-  TearDownStack stack = new TearDownStack();
+  TearDownStack stack = new TearDownStack(true);
 
   /**
    * Registers a TearDown implementor which will be run during {@link #tearDown()}

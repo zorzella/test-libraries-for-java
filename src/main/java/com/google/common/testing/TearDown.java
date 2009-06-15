@@ -16,8 +16,6 @@
 
 package com.google.common.testing;
 
-import com.google.common.testing.junit3.TearDownTestCase;
-
 /**
  * An object that can perform a {@link #tearDown} operation.
  *
@@ -27,9 +25,18 @@ public interface TearDown {
 
   /**
    * Performs a <b>single</b> tear-down operation.  Used only in the context
-   * of a running {@link TearDownTestCase}.
+   * of a running {@link com.google.common.testing.junit3.TearDownTestCase}.
    *
-   * @throws Exception for any reason. {@link TearDownTestCase} ensures that
+   * <p>If you want to not fail a test when a {@link TearDown} throws an 
+   * exception, you should implement a {@link SloppyTearDown} instead.
+   *
+   * <p> Note that, for backwards compatibility, JUnit 3's 
+   * {@link com.google.common.testing.junit3.TearDownTestCase} currently does
+   * not fail a test when an exception is thrown from one of its 
+   * {@link TearDown}s, but this is subject to change. Also, Junit 4's 
+   * {@link com.google.common.testing.junit3.TearDownTestCase} will. 
+   * 
+   * @throws Exception for any reason. {@code TearDownTestCase} ensures that
    *     any exception thrown will not interfere with other TearDown
    *     operations.
    */

@@ -16,7 +16,9 @@
 
 package com.google.common.testing;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,8 +32,18 @@ public class TearDownStack implements TearDownAccepter {
   public static final Logger logger
       = Logger.getLogger(TearDownStack.class.getName());
 
-  private LinkedList<TearDown> stack = new LinkedList<TearDown>(); 
+  private LinkedList<TearDown> stack = new LinkedList<TearDown>();
 
+  private final boolean suppressThrows; 
+
+  public TearDownStack() {
+    this.suppressThrows = false;
+  }
+
+  public TearDownStack(boolean suppressThrows) {
+    this.suppressThrows = suppressThrows;
+  }
+  
   public final void addTearDown(TearDown tearDown) {
     stack.addFirst(tearDown);
   }
@@ -40,13 +52,21 @@ public class TearDownStack implements TearDownAccepter {
    * Causes teardown to execute.
    */
   public final void runTearDown() {
+    List<Throwable> exceptions = new ArrayList<Throwable>();
     for (TearDown tearDown : stack) {
       try {
         tearDown.tearDown();
       } catch (Throwable t) {
-        TearDownStack.logger.log(Level.INFO,
-            "exception thrown during tearDown: " + t.getMessage(), t);
+        if (suppressThrows) {
+          TearDownStack.logger.log(Level.INFO,
+              "exception thrown during tearDown: " + t.getMessage(), t);
+        } else {
+          exceptions.add(t);
+        }
       }
+    }
+    if ((!suppressThrows) && (exceptions.size() > 0)) {
+      throw ClusterException.create(exceptions);
     }
     stack.clear();
   }
