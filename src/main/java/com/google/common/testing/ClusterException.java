@@ -58,7 +58,7 @@ import java.util.Collections;
  * 
  * @author Luiz-Otavio Zorzella
  */
-public final class ClusterException extends RuntimeException {
+final class ClusterException extends RuntimeException {
 
   public final Collection<? extends Throwable> exceptions;
   
