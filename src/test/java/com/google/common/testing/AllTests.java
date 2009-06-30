@@ -27,7 +27,8 @@ public class AllTests {
     TestSuite suite = new TestSuite("Test for com.google.common.testing");
     //$JUnit-BEGIN$
     suite.addTestSuite(TestLogHandlerTest.class);
-    suite.addTestSuite(JUnitAssertsTest.class);
+    suite.addTestSuite(com.google.common.testing.junit3.JUnitAssertsTest.class);
+    suite.addTestSuite(com.google.common.testing.junit4.JUnitAssertsTest.class);
     suite.addTestSuite(TearDownTestCaseTest.class);
     //$JUnit-END$
     return suite;

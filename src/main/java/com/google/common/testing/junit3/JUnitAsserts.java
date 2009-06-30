@@ -27,9 +27,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @deprecated use {@link com.google.common.testing.JUnitAsserts}
+ * Contains additional assertion methods not found in JUnit.
+ *
+ * @author kevinb
  */
-@Deprecated
 public final class JUnitAsserts {
 
   private JUnitAsserts() { }

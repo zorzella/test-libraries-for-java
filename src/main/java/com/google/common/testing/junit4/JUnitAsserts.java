@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.common.testing;
+package com.google.common.testing.junit4;
 
 import junit.framework.Assert;
 

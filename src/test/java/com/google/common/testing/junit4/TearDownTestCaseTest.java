@@ -16,7 +16,7 @@
 
 package com.google.common.testing.junit4;
 
-import static com.google.common.testing.JUnitAsserts.assertContentsInOrder;
+import static com.google.common.testing.junit4.JUnitAsserts.assertContentsInOrder;
 
 import com.google.common.testing.TearDown;
 import com.google.common.testing.TearDownStack;
