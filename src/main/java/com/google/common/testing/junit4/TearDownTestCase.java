@@ -18,9 +18,9 @@ package com.google.common.testing.junit4;
 
 import com.google.common.testing.TearDown;
 import com.google.common.testing.TearDownAccepter;
-import com.google.common.testing.TearDownStack;
 
 import org.junit.After;
+import org.junit.Rule;
 
 /**
  * A base class for test cases that want to be able to register "tear-down"
@@ -85,31 +85,30 @@ import org.junit.After;
  *
  * <p>If you are writing a piece of test infrastructure, not a test case, and
  * you want to be sure that what you do will be cleaned up, simply require
- * your caller to pass in an active instance of TearDownTestCase, to which you
- * can add your TearDown objects.
+ * your caller to pass in an active instance of {@link TearDownAccepter}, to
+ * which you can add your {@link TearDown}s.
  * 
  * <p>Please see usage examples in {@link TearDownTestCaseTest}.
  *
  * <p>This class is the JUnit4 equivalent of 
- * {@link com.google.common.testing.junit3.TearDownTestCase}
- * 
+ * {@link com.google.common.testing.junit3.TearDownTestCase}.
+ *
+ * <p>Note that this class is a thin wrapper around the
+ * {@link TearDownMethodRule}. If you would rather not extend this class, simply
+ * add that an {@code @Rule} to your test class.
+ *
  * @author Luiz-Otavio Zorzella
  * @author Kevin Bourrillion
  */
-public abstract class TearDownTestCase 
-    implements TearDownAccepter {
+public abstract class TearDownTestCase implements TearDownAccepter {
 
-  final TearDownStack stack = new TearDownStack();
+  @Rule
+  public final TearDownMethodRule tearDownRule = new TearDownMethodRule();
 
   /**
-   * Registers a TearDown implementor which will be run during {@link #tearDown()}
+   * Registers a TearDown implementor which will be run after the test execution.
    */
   public final void addTearDown(TearDown tearDown) {
-    stack.addTearDown(tearDown);
-  }
-
-  @After
-  public final void tearDown() {
-    stack.runTearDown();
+    tearDownRule.addTearDown(tearDown);
   }
 }

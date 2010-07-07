@@ -71,8 +71,8 @@ import junit.framework.TestCase;
  *
  * <p>If you are writing a piece of test infrastructure, not a test case, and
  * you want to be sure that what you do will be cleaned up, simply require
- * your caller to pass in an active instance of TearDownTestCase, to which you
- * can add your TearDown objects.
+ * your caller to pass in an active instance of {@link TearDownAccepter}, to 
+ * which you can add your {@link TearDown}s.
  * 
  * <p>Please see usage examples in {@link TearDownTestCaseTest}.
  *

@@ -54,7 +54,7 @@ public class TearDownTestCaseTest extends TestCase {
       }
     });
 
-    test.stack.runTearDown();
+    test.tearDownRule.stack.runTearDown();
     assertContentsInOrder(messages, "a");
   }
 
@@ -62,7 +62,7 @@ public class TearDownTestCaseTest extends TestCase {
     SomeObject obj = new SomeObject("b");
     test.addTearDown(new SomeObjectTearDown(obj));
 
-    test.stack.runTearDown();
+    test.tearDownRule.stack.runTearDown();
     assertContentsInOrder(messages, "b");
   }
 
@@ -70,7 +70,7 @@ public class TearDownTestCaseTest extends TestCase {
     TidyObject obj = new TidyObject("c");
     test.addTearDown(obj);
 
-    test.stack.runTearDown();
+    test.tearDownRule.stack.runTearDown();
     assertContentsInOrder(messages, "c");
   }
 
@@ -79,7 +79,7 @@ public class TearDownTestCaseTest extends TestCase {
     test.addTearDown(new TidyObject("y"));
     test.addTearDown(new TidyObject("z"));
 
-    test.stack.runTearDown();
+    test.tearDownRule.stack.runTearDown();
     assertContentsInOrder(messages, "z", "y", "x");
   }
 
@@ -89,7 +89,7 @@ public class TearDownTestCaseTest extends TestCase {
     test.addTearDown(new TidyObject("after"));
 
     try {
-      test.stack.runTearDown();
+      test.tearDownRule.stack.runTearDown();
       fail();
     } catch (RuntimeException expected) {
     }
@@ -99,12 +99,12 @@ public class TearDownTestCaseTest extends TestCase {
   public void testDontSkipOptionalTearDowns() throws Exception {
     test.addTearDown(new TidyObject("sometimes"));
     test.addTearDown(new TidyObject("always"));
-    test.stack.runTearDown();
+    test.tearDownRule.stack.runTearDown();
     assertContentsInOrder(messages, "always", "sometimes");
   }
 
   public void testWithNoTestEnvironments() throws Throwable {
-    test.tearDown();
+    test.tearDownRule.stack.runTearDown();
   }
 
   /** This is deeply ironic. */
