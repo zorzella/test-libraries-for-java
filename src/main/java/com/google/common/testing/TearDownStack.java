@@ -32,7 +32,7 @@ public class TearDownStack implements TearDownAccepter {
   public static final Logger logger
       = Logger.getLogger(TearDownStack.class.getName());
 
-  private LinkedList<TearDown> stack = new LinkedList<TearDown>();
+  final LinkedList<TearDown> stack = new LinkedList<TearDown>();
 
   private final boolean suppressThrows; 
 
@@ -65,10 +65,9 @@ public class TearDownStack implements TearDownAccepter {
         }
       }
     }
+    stack.clear();
     if ((!suppressThrows) && (exceptions.size() > 0)) {
       throw ClusterException.create(exceptions);
     }
-    stack.clear();
   }
-
 }

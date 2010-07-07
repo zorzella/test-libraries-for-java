@@ -1,6 +1,14 @@
 How To release a new version of TL4J (either read this or run howtorelease.sh for instructions)
 ==========================================
 
+Before
+------
+
+Before you begin, you might want to make sure the dependencies (JUnit) are up-to-date. TODO: what's the best way to check this? You can see the version in the pom.xml's <dependencies> section. If you do change the version there, make sure to regen the Eclipse project with :mvn -DdownloadSources=true -DdownloadJavadocs=true eclipse:eclipse". TODO: that is currently issuing an error regarding the lack of a junit javadoc artifact.
+
+Then
+----
+ 
 0) Create a release SVN tag:
 
 $ svn cp trunk tags/release-x.y.z

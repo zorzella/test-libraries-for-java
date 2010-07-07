@@ -99,7 +99,7 @@ import org.junit.After;
 public abstract class TearDownTestCase 
     implements TearDownAccepter {
 
-  TearDownStack stack = new TearDownStack();
+  final TearDownStack stack = new TearDownStack();
 
   /**
    * Registers a TearDown implementor which will be run during {@link #tearDown()}
