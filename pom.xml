@@ -12,7 +12,7 @@
 
   <profiles>
     <profile>
-      <id>junit3-only</id>     
+      <id>junit3-only</id>
       <build>
         <finalName>tl4j</finalName>
         <plugins>
@@ -36,9 +36,9 @@
         </plugins>
       </build>
     </profile>
-    
+
     <profile>
-      <id>junit4-only</id>     
+      <id>junit4-only</id>
       <build>
        <finalName>tl4j</finalName>
         <plugins>
@@ -62,9 +62,9 @@
         </plugins>
       </build>
     </profile>
-    
+
     <profile>
-      <id>agnostic</id>    
+      <id>agnostic</id>
       <build>
        <finalName>tl4j</finalName>
         <plugins>
@@ -77,7 +77,7 @@
                   <goal>jar</goal>
                 </goals>
                 <configuration>
-                  <classifier>agnostic-${project.version}</classifier>                               
+                  <classifier>agnostic-${project.version}</classifier>
                   <includes>
                     <include>**/common/testing/*.class</include>
                   </includes>
@@ -88,9 +88,9 @@
         </plugins>
       </build>
     </profile>
-    
+
     <profile>
-      <id>junit3</id>    
+      <id>junit3</id>
       <build>
         <finalName>tl4j</finalName>
         <plugins>
@@ -103,7 +103,7 @@
                   <goal>jar</goal>
                 </goals>
                 <configuration>
-                  <classifier>junit3-${project.version}</classifier>                               
+                  <classifier>junit3-${project.version}</classifier>
                   <includes>
                     <include>**/common/testing/*.class</include>
                     <include>**/junit3/*</include>
@@ -115,9 +115,9 @@
         </plugins>
       </build>
     </profile>
-    
+
      <profile>
-      <id>junit4</id>    
+      <id>junit4</id>
       <build>
         <finalName>tl4j</finalName>
         <plugins>
@@ -130,7 +130,7 @@
                   <goal>jar</goal>
                 </goals>
                 <configuration>
-                  <classifier>junit4-${project.version}</classifier>                               
+                  <classifier>junit4-${project.version}</classifier>
                   <includes>
                     <include>**/common/testing/*.class</include>
                     <include>**/junit4/*</include>
@@ -142,8 +142,8 @@
         </plugins>
       </build>
     </profile>
-    
-    
+
+
   </profiles>
 
   <dependencies>
@@ -157,7 +157,7 @@
 
 
   <build>
-   <!--  <finalName>tl4j</finalName>       -->  
+   <!--  <finalName>tl4j</finalName>       -->
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -194,7 +194,21 @@
           </execution>
         </executions>
       </plugin>
-         
+
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <show>private</show>
+          <nohelp>true</nohelp>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
