@@ -24,12 +24,12 @@ import junit.framework.TestCase;
 
 /**
  * A base class for test cases that require <b>reliable</b> tear-down.
- * 
+ *
  * <p>JUnit's concept of {@link TestCase#tearDown} works fine for strict "unit
  * tests" (which is what the authors of JUnit "want" you to write with it),
  * but it turns out that for anything even slightly more complex, it has
  * severe limitations, including:
- * 
+ *
  * <ul>
  * <li>if an exception occurs during {@link TestCase#setUp},
  *     {@code tearDown()} will never get called
@@ -46,7 +46,7 @@ import junit.framework.TestCase;
  *   </ul>
  * <li>because of this risk of exceptions, you often have to go to extreme
  *     lengths to try to be safe from them
- * <li>different test methods in the same class must share the same 
+ * <li>different test methods in the same class must share the same
  *     {@code tearDown()} method, which therefore needs to try to perform the
  *     union of all possible cleanup operations that could be needed of it.
  * <li>if you use any test utility classes that change persistent state, it's
@@ -56,7 +56,7 @@ import junit.framework.TestCase;
  *     to run in, especially as the order of events in your tests themselves
  *     changes.
  * </ul>
- * 
+ *
  * TearDownTestCase solves all these problems.  Whenever you create an object
  * which must be removed later, or make any persistent change to a shared
  * resource that must be reverted later, simply pop a TearDown item onto the
@@ -71,21 +71,32 @@ import junit.framework.TestCase;
  *
  * <p>If you are writing a piece of test infrastructure, not a test case, and
  * you want to be sure that what you do will be cleaned up, simply require
- * your caller to pass in an active instance of {@link TearDownAccepter}, to 
+ * your caller to pass in an active instance of {@link TearDownAccepter}, to
  * which you can add your {@link TearDown}s.
- * 
+ *
  * <p>Please see usage examples in {@link TearDownTestCaseTest}.
  *
  * @author Kevin Bourrillion
  */
-public abstract class TearDownTestCase extends TestCase
-    implements TearDownAccepter {
+public abstract class TearDownTestCase extends TestCase implements TearDownAccepter {
+
+  /**
+   * Creates a TearDownTestCase with the default (empty) name.
+   */
+  public TearDownTestCase() {}
+
+  /**
+   * Creates a TearDownTestCase with the specified name.
+   */
+  public TearDownTestCase(String name) {
+    super(name);
+  }
 
   @Override
   protected void setUp() throws Exception {
     super.setUp();
   }
-  
+
   final TearDownStack stack = new TearDownStack(true);
 
   /**
