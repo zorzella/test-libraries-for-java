@@ -23,13 +23,11 @@ $ cd tags/release-x.y.z
 
 3) Build a dist. There are 5 profiles
 
-$ mvn clean
-$ for i in junit3 junit4 junit3-only junit4-only agnostic; do mvn -P ${i} install; done
+$ mvn clean; for i in junit3 junit4 junit3-only junit4-only agnostic; do mvn -P ${i} install; done
 
 4) Create the sources, and rename the output file (TODO: fix this)
 
-$ mvn source:jar
-$ mv target/test-libraries-for-java-x.y.z-sources.jar target/tl4j-x.y.z-src.jar
+$ mvn source:jar; mv target/test-libraries-for-java-x.y.z-sources.jar target/tl4j-x.y.z-src.jar
 
 5) Commit:
 
@@ -37,9 +35,7 @@ $ svn commit -m "release x.y.z"
 
 6) Create a tar of the release itself
 
-$ svn export . target/tl4j-release-x.y.z
-$ cd target
-$ zip -r tl4j-release-x.y.z.zip tl4j-release-x.y.z
+$ svn export . target/tl4j-release-x.y.z; cd target; zip -r tl4j-release-x.y.z.zip tl4j-release-x.y.z
 
 7) Upload to mvn repository
 
@@ -78,3 +74,15 @@ Summary: JUnit 4 self-contained jar (this is tl4j-junit4-only + agnostic)
 Labels: Featured, Type-Package, OpSys-All
 
 Mark the older release as deprecated (which you'll find as an option under "Delete").
+
+9) Go back to trunk
+
+$ cd trunk
+
+10) change the pom.xml's version to the new snapshot to:
+
+<version>x.y.z-SNAPSHOT</version>
+
+11) commit
+
+$ svn commit -m "set current version to x.y.z-SNAPSHOT"
