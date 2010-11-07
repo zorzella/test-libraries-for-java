@@ -58,6 +58,17 @@ public class TestLogHandlerTest extends TearDownTestCase {
     assertSame(EXCEPTION, record.getThrown());
   }
 
+  public void testConcurrentModification() throws Exception {
+    // Tests for the absence of a bug where logging while iterating over the
+    // stored log records causes a ConcurrentModificationException
+    assertTrue(handler.getStoredLogRecords().isEmpty());
+    ExampleClassUnderTest.foo();
+    ExampleClassUnderTest.foo();
+    for (LogRecord record : handler.getStoredLogRecords()) {
+      ExampleClassUnderTest.foo();
+    }
+  }
+
   static final Exception EXCEPTION = new Exception();
 
   static class ExampleClassUnderTest {

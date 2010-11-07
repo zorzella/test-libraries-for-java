@@ -32,7 +32,7 @@ import java.util.logging.LogRecord;
  *     super.setUp();
  *     handler = new TestLogHandler();
  *     SomeClass.logger.addHandler(handler);
- *     addRequiredTearDown(new TearDown() {
+ *     addTearDown(new TearDown() {
  *       public void tearDown() throws Exception {
  *         SomeClass.logger.removeHandler(handler);
  *       }
@@ -53,11 +53,8 @@ import java.util.logging.LogRecord;
 public class TestLogHandler extends Handler {
 
   /** We will keep a private list of all logged records */
-  private final List<LogRecord> list = new ArrayList<LogRecord>();
-
-  /** And also the same list in an unmodifiable view (for the getter) */
-  private final List<LogRecord> storedLogRecords
-      = Collections.unmodifiableList(list);
+  private final List<LogRecord> list =
+      Collections.synchronizedList(new ArrayList<LogRecord>());
 
   /**
    * Adds the most recently logged record to our list.
@@ -79,9 +76,10 @@ public class TestLogHandler extends Handler {
 
   /**
    * Fetch the list of logged records
-   * @return unmodifiablie LogRecord list of all logged records
+   * @return unmodifiable LogRecord list of all logged records
    */
   public List<LogRecord> getStoredLogRecords() {
-    return storedLogRecords;
+    List<LogRecord> result = new ArrayList<LogRecord>(list);
+    return Collections.unmodifiableList(result);
   }
 }

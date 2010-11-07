@@ -142,8 +142,6 @@
         </plugins>
       </build>
     </profile>
-
-
   </profiles>
 
   <dependencies>
@@ -153,8 +151,6 @@
       <version>4.8.1</version>
     </dependency>
   </dependencies>
-
-
 
   <build>
    <!--  <finalName>tl4j</finalName>       -->
@@ -173,8 +169,6 @@
           <outputDirectory>${basedir}/target-eclipse/classes</outputDirectory>
         </configuration>
       </plugin>
-
-
 
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
