@@ -34,8 +34,11 @@ public final class TearDownMethodRule implements MethodRule, TearDownAccepter {
     return new Statement() {
       @Override
       public void evaluate() throws Throwable {
-        base.evaluate();
-        stack.runTearDown();
+        try {
+          base.evaluate();
+        } finally {
+          stack.runTearDown();
+        }
       }
     };
   }
